@@ -1,0 +1,6 @@
+{"young-alumni":
+  {"total":0,
+   "donors":100,
+   "challenge_amount":0,
+   "challenge_donors":1000}
+}

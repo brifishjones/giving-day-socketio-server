@@ -1,0 +1,93 @@
+---
+- hosts: all
+  vars:
+    http_port: 80
+    max_clients: 200
+    web_root_path: /var/www
+  user: vagrant
+  become: yes
+  tasks:
+  - name: ensure apache & php are installed
+    apt: pkg={{ item }} state=present update_cache=yes cache_valid_time=86400
+    with_items:
+      - apache2
+      - php5
+      - libapache2-mod-php5
+      - php5-mysql
+      - php5-tidy
+      - php5-ldap
+      - php5-curl
+      - imagemagick
+      - curl
+    notify:
+    - restart apache
+
+  - name: enable apache modules
+    command: "a2enmod {{ item }} creates=/etc/apache2/mods-enabled/{{ item }}.load"
+    with_items:
+      - rewrite
+      - ssl
+    notify:
+    - restart apache
+
+  - name: create certificates directory
+    file: path=/etc/apache2/ssl state=directory
+
+  - name: enable ssl by copying the default ssl conf
+    copy: src=files/default-ssl.conf dest=/etc/apache2/sites-enabled
+    notify:
+    - restart apache
+
+  - name: Create self-signed certificate, if configured.
+    command: openssl req -x509 -newkey rsa:2048 -nodes -subj '/CN=192.168.56.105' -days 3650 -keyout /etc/apache2/ssl/server.key -out /etc/apache2/ssl/server.crt 
+
+  - name: download a newer version of nodejs
+    shell: curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
+
+  - name: install nodejs 
+    command: apt-get install -y nodejs build-essential 
+
+  - name: ensure apache is running
+    service: name=apache2 state=started
+
+  - name: Assures /vagrant/settings dir exists
+    file: path=/vagrant/settings state=directory
+
+  - name: copy index.html, socket.io.js, and style.css files
+    copy: src=files/{{ item }} dest=/var/www/html/{{ item }}
+    with_items:
+      - index.html
+      - socket.io.js
+      - style.css
+
+  - name: copy giving-day-total.txt and giving-day-challenge-totals.txt files
+    copy: src=files/{{ item }} dest=/var/tmp/{{ item }}
+    with_items:
+      - giving-day-total.txt
+      - giving-day-challenge-totals.txt
+
+  - name: create directory for the nodejs socket.io server
+    file: path=/etc/nodejs/giving-day state=directory
+
+  - name: copy the package.json file for the nodejs socket.io server
+    copy: src=files/package.json dest=/etc/nodejs/giving-day
+
+  - name: install nodejs socket.io server 
+    npm:
+      path: /etc/nodejs/giving-day
+
+  - name: copy the server.js file for the nodejs socket.io server
+    copy: src=files/server.js dest=/etc/nodejs/giving-day
+
+  - name: make the giving day socket.io server into a service
+    copy: src=files/giving-day-socket-server.conf dest=/etc/init
+
+  - name: ensure giving day socket.io service is running
+    service: name=giving-day-socket-server state=started
+
+  handlers:
+    - name: restart apache
+      service: name=apache2 state=restarted
+
+    - name: start socket.io server
+      service: name=giving-day-socket-server state=started

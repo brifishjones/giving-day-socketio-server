@@ -1,0 +1,17 @@
+{
+  "name": "giving-day",
+  "version": "1.0.0",
+  "private": true,
+  "description": "used to update pledge amounts on giving day",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "brifishjones.com",
+  "license": "MIT",
+  "dependencies": {
+    "socket.io": "^2.0.4"
+  },
+  "devDependencies": {}
+}

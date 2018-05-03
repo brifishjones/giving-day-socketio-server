@@ -1,0 +1,79 @@
+<!doctype html>
+<html class="no-js" lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Giving Day</title>
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/foundation/6.4.3/css/foundation.min.css">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/motion-ui/1.2.3/motion-ui.min.css">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/foundation/6.4.3/css/foundation-prototype.min.css">
+<link rel="stylesheet" href='//cdnjs.cloudflare.com/ajax/libs/foundicons/3.0.0/foundation-icons.css'>
+<link rel="stylesheet" href="/style.css">
+
+</head>
+<body>
+
+
+<div class="top-bar">
+<div class="top-bar-left">
+<ul class="menu">
+<li><a href="http://brifishjones.com">brifishjones.com</a></li>
+<li><a href="https://socket.io">socket.IO</a></li>
+<li><a href="http://brifishjones.com/giving-day-socketio">Blog</a></li>
+</ul>
+</div>
+</div>
+
+<div class="callout large primary">
+<div class="text-center">
+<h1>Giving Day</h1>
+<h2 class="subheader">Demo of socket.IO</h2>
+</div>
+</div>
+<article class="grid-container">
+<div class="grid-x align-center">
+<div class="cell medium-8">
+<div class="blog-post">
+<h4 style="text-align: center;">Total Raised</h4>
+<p class="money-raised" style="text-align: center;">$15,000</p>
+<p>For this demo the socket.IO server will update the <i>Total Raised</i> and <i>Young Alumni Challenge</i> every 15 seconds.</p>
+<p><strong>Parents Council Challenge</strong> - Dollar-for-dollar match up to $12,250 (8 am - 12 am)</p>
+<div id="parents-council" class="success progress" role="progressbar" tabindex="0" aria-valuenow="100" aria-valuemin="0" aria-valuetext="100 percent" aria-valuemax="100">
+  <span class="progress-meter" style="width: 100%">
+    <p class="progress-meter-text">Challenge complete!</p>
+  </span>
+</div>
+<p><strong>Young Alumni Challenge</strong> - Gifts from 1000 alumni who've graduated in the last 10 years unlock $23,000 (All Day)</p>
+<div id="young-alumni" class="progress" role="progressbar" tabindex="0" aria-valuenow="10" aria-valuemin="0" aria-valuetext="10 percent" aria-valuemax="100">
+  <span class="progress-meter" style="width: 10%">
+    <p class="progress-meter-text">100</p>
+  </span>
+</div>
+
+</div>
+</div>
+</div>
+</article>
+<script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/foundation/6.4.3/js/foundation.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/motion-ui/1.2.3/motion-ui.min.js"></script>
+<script src="/socket.io.js"></script>
+<script>
+  $(document).foundation();
+</script>
+<script>
+  var socket = io('192.168.56.105' + ':4443', {secure: true});
+  socket.on('update-totals', function (data) {
+  	document.getElementsByClassName("money-raised")[0].innerHTML = "$" + data.total.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  });
+ 	socket.on('update-challenges', function (data) {
+    for (var key in data) {
+      var donors = data[key]['donors'];
+      var percent_complete = donors * 100.0 / data[key]['challenge_donors'];
+      document.getElementById(key).innerHTML = '<span class="progress-meter" style="width: ' + percent_complete + '%"><p class="progress-meter-text">' + donors + '</p></span>';
+    }
+  });	
+</script>
+</body>
+</html>
+
