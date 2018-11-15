@@ -9,13 +9,13 @@ p.money-raised {
   left: 0;
   width: 70%;
   height: 70%;
-  margin-top: 35rem;
+  margin-top: 60rem;
 }
 path:hover, circle:hover {
-  stroke: #002868 !important;
+  stroke: #1073ce !important;
   stroke-width:2px;
   stroke-linejoin: round;
-  fill: #002868 !important;
+  fill: #1073ce !important;
   cursor: pointer;
 }
 #path67 {
@@ -30,8 +30,8 @@ path:hover, circle:hover {
   left: 0px;
   z-index: 1;
   background-color: #ffffff;
-  border: 2px solid #BF0A30;
-  border-radius: 5px;
+  /* border: 2px solid #BF0A30; */
+  border-radius: 3px;
   padding: 5px;
-  font-family: arial;
+  font-family: "Times New Roman", Times, serif;
 }

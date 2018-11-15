@@ -4,12 +4,11 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Giving Day</title>
-<link rel="stylesheet" href="/cdnjs.cloudflare.com/ajax/libs/foundation/6.4.3/css/foundation.min.css">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/foundation/6.4.3/css/foundation.min.css">
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/motion-ui/1.2.3/motion-ui.min.css">
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/foundation/6.4.3/css/foundation-prototype.min.css">
 <link rel="stylesheet" href='//cdnjs.cloudflare.com/ajax/libs/foundicons/3.0.0/foundation-icons.css'>
-<link rel="stylesheet" href="style.css">
-
+<link rel="stylesheet" type = "text/css" href="style.css">
 </head>
 <body>
 
@@ -118,29 +117,21 @@
 </g>
 <path id="path67" fill="none" stroke="#A9A9A9" stroke-width="2" d="M385,593v55l36,45 M174,525h144l67,68h86l53,54v46"/>
 </svg>
-<script src="scripts.js"></script>
-
 
 <script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/foundation/6.4.3/js/foundation.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/motion-ui/1.2.3/motion-ui.min.js"></script>
+<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
 <script src="socket.io.js"></script>
+<script src="scripts.js"></script>
+
 <script>
   $(document).foundation();
 </script>
 <script>
   var socket = io('192.168.56.105' + ':4443', {secure: true});
-  // socket.on('update-totals', function (data) {
-  // 	document.getElementsByClassName("money-raised")[0].innerHTML = "$" + data.total.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-  // });
- 	socket.on('update-state-totals', function (data) {
-    for (var key in data) {
-      console.log(key);
-
-      // var donors = data[key]['donors'];
-      // var percent_complete = donors * 100.0 / data[key]['challenge_donors'];
-      // document.getElementById(key).innerHTML = '<span class="progress-meter" style="width: ' + percent_complete + '%"><p class="progress-meter-text">' + donors + '</p></span>';
-    }
+  socket.on('update-totals', function (data) {
+  	document.getElementsByClassName("money-raised")[0].innerHTML = "$" + data.total.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   });
   us_state_abbrev = {
     'AL': 'Alabama',
@@ -193,19 +184,19 @@
     'WV': 'West Virginia',
     'WI': 'Wisconsin',
     'WY': 'Wyoming',
-    'DC': ''
-}
-  var mn = document.getElementById('MN');
-  mn.style.fill = '#1073ce';
-  mn.setAttribute('data-info', '<div>State: {0}</div><div>Number of donors: {1}</div>'.format(us_state_abbrev['MN'],"$12000"))
-  // mn.setAttribute('data-info', 'hello world')
+  }
 
+  socket.on('update-state-totals', function (data) {
+    for (var key in data) {
+      var state = document.getElementById(key);
+      state.style.fill = '#1073ce';
+      var data_info = "<div>State: " + us_state_abbrev[key] + "</div><div>Number of donors: " + data[key].toString() + "</div>";
+      state.setAttribute('data-info', data_info);
+      // var donors = data[key]['donors'];
+      // var percent_complete = donors * 100.0 / data[key]['challenge_donors'];
+      // document.getElementById(key).innerHTML = '<span class="progress-meter" style="width: ' + percent_complete + '%"><p class="progress-meter-text">' + donors + '</p></span>';
+    }
+  });
 </script>
-
-<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
-<link rel="stylesheet" type = "text/css" href = "style.css" />
-
-
-
 </body>
 </html>

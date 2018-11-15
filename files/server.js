@@ -23,20 +23,20 @@ console.log('%s: server started ...', Date());
 var timer = setInterval(function() {
   if (connections.length > 0) {
     fs.readFile('/var/tmp/giving-day-total.txt', 'ascii', function(err, content) {
-      // total = parseInt(content);
-      // if (total > 0 /* && total != prev_total */) {  // comment for demo only
-      //   console.log("%s: total amount = $%s", Date(), total.toString());
-      //   io.sockets.emit('update-totals', {total: total.toString()});
+      total = parseInt(content);
+      if (total > 0 /* && total != prev_total */) {  // comment for demo only
+        console.log("%s: total amount = $%s", Date(), total.toString());
+        io.sockets.emit('update-totals', {total: total.toString()});
         fs.readFile('/var/tmp/state-totals.txt', 'ascii', function(err, content) {
           var myjson = JSON.stringify(content);
           console.log(myjson);
           var obj = JSON.parse(content);
-          consol.log("HERE")
+          console.log("HERE")
           // donors = obj['young-alumni']['donors'];  // get the number of donors for demo only
           io.sockets.emit('update-state-totals', obj);
         });
       }
-      // prev_total = total;
+      prev_total = total;
     });
     // for this demo update totals
     // total = prev_total + Math.floor(Math.random() * 100) + 1;
