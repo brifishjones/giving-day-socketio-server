@@ -21,4 +21,8 @@ The giving-day-socket-io repository contains an Ubuntu virtual box that has both
 `vagrant ssh` to access the virtual box and take a look at some of files such as:
 - the socket.IO server log: `tail -n 100 /var/log/node.log`
 - the ansible playbook (playbook.yml) that sets up and configures the server
-- and the contents of the files directory, in particular the socket server (files/server.js) and the socket client (files/index.html)
+- the contents of the files directory, in particular the socket server (files/server.js) and the socket client (files/index.html)
+- note that files/server.js is copied to /etc/nodejs/giving-day/server.js when Ansible sets up the virtual box
+- note that files/index.html is copied to /var/www/html/index.html when Ansible configures the virtual box
+- if you want to modify either, make changes directly to /var/www/html/index.html or /etc/nodejs/giving-day/server.js
+- bounce apache: `sudo service apache2 restart` or bounce socket.io: `sudo service giving-day-socket-server restart`
