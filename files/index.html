@@ -193,17 +193,19 @@
     'WY': 'Wyoming',
   }
 
-  socket.on('update-state-totals', function (data) {
+  socket.on('update-donors-by-state', function (data) {
     for (var key in data) {
       var state = document.getElementById(key);
-      state.style.fill = '#1073ce';
+      if (data[key] > 0) {  // if more than one donor color the state blue
+        state.style.fill = '#1073ce';
+      } else {
+        state.style.fill = '#d3d3d3';
+      }
       var data_info = "<div>State: " + us_state_abbrev[key] + "</div><div>Number of donors: " + data[key].toString() + "</div>";
       state.setAttribute('data-info', data_info);
-      // var donors = data[key]['donors'];
-      // var percent_complete = donors * 100.0 / data[key]['challenge_donors'];
-      // document.getElementById(key).innerHTML = '<span class="progress-meter" style="width: ' + percent_complete + '%"><p class="progress-meter-text">' + donors + '</p></span>';
     }
   });
+
 </script>
 </body>
 </html>
