@@ -133,6 +133,13 @@
   socket.on('update-totals', function (data) {
   	document.getElementsByClassName("money-raised")[0].innerHTML = "$" + data.total.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   });
+  socket.on('update-challenges', function (data) {
+    for (var key in data) {
+      var donors = data[key]['donors'];
+      var percent_complete = donors * 100.0 / data[key]['challenge_donors'];
+      document.getElementById(key).innerHTML = '<span class="progress-meter" style="width: ' + percent_complete + '%"><p class="progress-meter-text">' + donors + '</p></span>';
+    }
+  });  
   us_state_abbrev = {
     'AL': 'Alabama',
     'AK': 'Alaska',
