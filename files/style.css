@@ -11,18 +11,14 @@ p.money-raised {
   height: 70%;
   margin-top: 60rem;
 }
-path:hover, circle:hover {
+/*path:hover, circle:hover {
   stroke: #1073ce !important;
   stroke-width:2px;
   stroke-linejoin: round;
-  /* fill: #1073ce !important; */
+  fill: #1073ce !important;
   border: 2px solid #ff0000;
   cursor: pointer;
-}
-
-/* #TODO: try
-path[data-info="something"] */
-
+}*/
 #path67 {
   fill: none !important;
   stroke: #A9A9A9 !important;
@@ -35,7 +31,6 @@ path[data-info="something"] */
   left: 0px;
   z-index: 1;
   background-color: #ffffff;
-  /* border: 2px solid #BF0A30; */
   border-radius: 3px;
   padding: 5px;
   font-family: "Times New Roman", Times, serif;
