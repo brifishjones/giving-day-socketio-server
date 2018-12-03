@@ -11,15 +11,7 @@ p.money-raised {
   height: 70%;
   margin-top: 60rem;
 }
-/*path:hover, circle:hover {
-  stroke: #1073ce !important;
-  stroke-width:2px;
-  stroke-linejoin: round;
-  fill: #1073ce !important;
-  border: 2px solid #ff0000;
-  cursor: pointer;
-}*/
-#path67 {
+#frames {
   fill: none !important;
   stroke: #A9A9A9 !important;
   cursor: default;
