@@ -1,20 +1,12 @@
 p.money-raised {
   font-size: 3.0rem;
-  color: #14679e;
+  color: #14679e; 
 }
-#us-map{
+#us-map {
   display: block;
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 70%;
-  height: 70%;
-  margin-top: 60rem;
-}
-#frames {
-  fill: none !important;
-  stroke: #A9A9A9 !important;
-  cursor: default;
+  width: 100%;
+  height: 100%;
+  margin-bottom: 35px;
 }
 #info-box {
   display: none;
@@ -23,7 +15,11 @@ p.money-raised {
   left: 0px;
   z-index: 1;
   background-color: #ffffff;
-  border-radius: 3px;
+  border: 1px solid #cccccc;
+  border-radius: 5px;
   padding: 5px;
-  font-family: "Times New Roman", Times, serif;
+  font-family: arial;
+}
+path:hover, circle:hover {
+  cursor: pointer;
 }

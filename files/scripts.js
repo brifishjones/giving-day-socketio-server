@@ -1,6 +1,6 @@
-$("path, circle").hover(function(e) {
+$("path, circle").mouseenter(function() {
   $('#info-box').css('display','block');
-  $('#info-box').html($(this).data('info'));
+  $('#info-box').html($(this).attr('data-info'));
 });
 
 $("path, circle").mouseleave(function(e) {
